@@ -1,0 +1,9 @@
+.DS_Store
+.classpath
+.project
+/target
+/.settings
+/src/main/webapp/META-INF
+.externalToolBuilders
+.mymetadata
+maven-eclipse.xml
