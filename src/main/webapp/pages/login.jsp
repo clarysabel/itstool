@@ -1,59 +1,38 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<!DOCTYPE HTML>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-
-<link media="all" rel="stylesheet" type="text/css" href="../css/all.css" />
-
-<title>ITS Tool</title>
-<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
 </head>
-
 <body>
-	<div id="login_wrapper">
-		<div class="logo">
-			<img src="../images/logo-white.png" alt="Logo" />
-		</div>
 
-		<div id="login_container">
-			<form id="login" action="process_login" method="post">
+<h1>Login</h1>
+<div id="login-error">${error}</div>
 
-				<div id="login_form_body">
-					<label class="label_login">User</label><input class="login_input"
-						id="username" type="text" tabindex="1" name="j_username" autofocus
-						required> <br> <br> <label class="label_login">Pass</label><input
-						class="login_input" id="password" type="password" tabindex="2"
-						name="j_password" required> <br> <br>
-				</div>
+<c:url var="logoUrl" value="/resources/openidlogosmall.png" />
+<p><img src="${logoUrl}"></img>Login with OpenID:</p>
+<c:url var="openIDLoginUrl" value="/j_spring_openid_security_check" />
+<form action="${openIDLoginUrl}" method="post" >
+	<label for="openid_identifier">OpenID Login</label>:
+	<input id="openid_identifier" name="openid_identifier" type="text"/>
+	<input  type="submit" value="Login"/>								
+</form>
 
-				<div id="login_action">
-					<input id="loginkeeping" type="checkbox" value="loginkeeping"
-						name="loginkeeping" tabindex="4"> <label
-						for="loginkeeping">Remember me</label> <label id="label_forgot">Forgot password?</label>
-						<br>
-						<br>
-				</div>
+<hr/>
 
-				<div id="login_submit">
-					<button type="submit" class="login_btn" tabindex="4">Log in</button>
-				</div>
-			</form>
+<c:url var="googleLogoUrl" value="/resources/google-logo.png" />
+<img src="${googleLogoUrl}"></img>
+<form action="${openIDLoginUrl}" method="post">
+	   For Google users:
+	  <input name="openid_identifier" type="hidden" value="https://www.google.com/accounts/o8/id"/>
+	  <input type="submit" value="Sign with Google"/>
+</form>
 
-			<c:if test="${not empty error}">
-				<div class="errorblock">
-					<br>
-					<p class="align_center">
-						Your login attempt was not successful, try again.<br /> Caused :
-						${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
-					</p>
-				</div>
-			</c:if>
-		</div>
-	</div>
-
-	<%-- 	<footer><spring:message code="login.footer.text" /> --%>
-	<!-- 	</footer> -->
 </body>
 </html>
