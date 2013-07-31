@@ -22,6 +22,34 @@ import com.openenglish.itstool.util.ITSConstants;
 @SuppressWarnings("deprecation")
 @Service("userDetailsService")
 public class AuthService implements UserDetailsService {
+    private UserRepository userRepository;
+ 
+    // required by CGLIB
+    protected AuthService() {
+    }
+ 
+    public AuthService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+ 
+    @Override
+    @Transactional
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
+    	System.out.println(username);
+        //User user = userRepository.findByLoginOpenId(username);
+       throwExceptionIfNotFound(null, username);
+        //Build UserDetails Spring 
+        //return new AuthenticationUserDetails(user);
+        return null;
+    }
+ 
+    private void throwExceptionIfNotFound(User user, String loginOpenId) {
+        if (user == null) {
+            throw new UsernameNotFoundException("User with open id login " + loginOpenId + "  has not been found.");
+        }
+    }
+}
+/*public class AuthService implements UserDetailsService {
 
 	@Autowired
 	private UserBo userBo;
@@ -71,4 +99,4 @@ public class AuthService implements UserDetailsService {
 		this.userBo = userBo;
 	}
 
-}
+}*/
