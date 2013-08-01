@@ -1,5 +1,7 @@
 package com.openenglish.itstool.bean;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,11 +12,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.openenglish.itstool.common.bean.Bean;
 
 @Entity
 @Table(name = "inputs", catalog = "orion")
-public class Input implements Bean {
+public class Input implements Serializable {
 
 	private static final long serialVersionUID = -2559719551056552128L;
 
@@ -27,24 +28,30 @@ public class Input implements Bean {
 	@JoinColumn(name = "operation_id")
 	private Operation operation;
 	
+	@Column(name="name")
 	private String name;
+	
+	@Column(name="type")
 	private String type;
 	
 	@Column(name="display_name")
 	private String displayName;
 	
+	@Column(name="deleted")
+	private Boolean deleted;
+	
+	public Input() {
+	}
+	
 	public Input(Integer inputId, Operation operation, String name,
-			String type, String displayName) {
+			String type, String displayName, Boolean deleted) {
 		super();
 		this.inputId = inputId;
 		this.operation = operation;
 		this.name = name;
 		this.type = type;
 		this.displayName = displayName;
-	}
-	
-	public Input() {
-		super();
+		this.deleted = deleted;
 	}
 
 	public Integer getInputId() {
@@ -85,6 +92,14 @@ public class Input implements Bean {
 
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
+	}
+
+	public Boolean getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(Boolean deleted) {
+		this.deleted = deleted;
 	}
 	
 }

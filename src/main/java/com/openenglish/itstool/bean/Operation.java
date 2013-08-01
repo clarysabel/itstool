@@ -1,5 +1,6 @@
 package com.openenglish.itstool.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -14,16 +15,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
-
-import com.openenglish.itstool.common.bean.Bean;
 
 @Entity
 @Table(name = "operations", catalog = "orion")
-@SQLDelete(sql="UPDATE operations SET deleted = 'Y' WHERE id = ?")
-@Where(clause="deleted <> 'Y'")
-public class Operation implements Bean {
+public class Operation implements Serializable {
 
 	private static final long serialVersionUID = 4196284535407534221L;
 
@@ -32,17 +27,24 @@ public class Operation implements Bean {
 	@Column(name = "operation_id")
 	private Integer operationId;
 	
+	@Column(name="name")
 	private String name;
+	
+	@Column(name="type")
 	private String type;
-	private String detail;
-	private Character deleted;
 	
 	@Column(name="sql_code")
 	private String sqlCode;
-
+	
+	@Column(name="detail")
+	private String detail;
+	
+	@Column(name="deleted")
+	private Boolean deleted;
+	
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "operations_roles", schema="orion", joinColumns = { @JoinColumn(name = "operation_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
-	private List<Role> roles;
+	@JoinTable(name = "operations_categories", schema="orion", joinColumns = { @JoinColumn(name = "operation_id") }, inverseJoinColumns = { @JoinColumn(name = "category_id") })
+	private List<Category> categories;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "operation")
 	private List<Input> inputs;
@@ -50,23 +52,28 @@ public class Operation implements Bean {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "operation")
 	private List<Output> outputs;
 
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "operation")
+	private List<OperationExecutionHistory> operationExecutionHistories;
+
+	public Operation() {
+	}
+	
 	public Operation(Integer operationId, String name, String type,
-			String detail, Character deleted, String sqlCode, List<Role> roles,
-			List<Input> inputs, List<Output> outputs) {
+			String sqlCode, String detail, Boolean deleted,
+			List<Category> categories, List<Input> inputs,
+			List<Output> outputs,
+			List<OperationExecutionHistory> operationExecutionHistories) {
 		super();
 		this.operationId = operationId;
 		this.name = name;
 		this.type = type;
+		this.sqlCode = sqlCode;
 		this.detail = detail;
 		this.deleted = deleted;
-		this.sqlCode = sqlCode;
-		this.roles = roles;
+		this.categories = categories;
 		this.inputs = inputs;
 		this.outputs = outputs;
-	}
-	
-	public Operation() {
-		super();
+		this.operationExecutionHistories = operationExecutionHistories;
 	}
 
 	public Integer getOperationId() {
@@ -93,22 +100,6 @@ public class Operation implements Bean {
 		this.type = type;
 	}
 
-	public String getDetail() {
-		return detail;
-	}
-
-	public void setDetail(String detail) {
-		this.detail = detail;
-	}
-
-	public Character getDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(Character deleted) {
-		this.deleted = deleted;
-	}
-
 	public String getSqlCode() {
 		return sqlCode;
 	}
@@ -117,12 +108,37 @@ public class Operation implements Bean {
 		this.sqlCode = sqlCode;
 	}
 
-	public List<Role> getRoles() {
-		return roles;
+	public String getDetail() {
+		return detail;
 	}
 
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
+	public void setDetail(String detail) {
+		this.detail = detail;
+	}
+
+	public Boolean getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(Boolean deleted) {
+		this.deleted = deleted;
+	}
+
+	public List<OperationExecutionHistory> getOperationExecutionHistories() {
+		return operationExecutionHistories;
+	}
+
+	public void setOperationExecutionHistories(
+			List<OperationExecutionHistory> operationExecutionHistories) {
+		this.operationExecutionHistories = operationExecutionHistories;
+	}
+
+	public List<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
 	}
 
 	public List<Input> getInputs() {
@@ -140,5 +156,15 @@ public class Operation implements Bean {
 	public void setOutputs(List<Output> outputs) {
 		this.outputs = outputs;
 	}
-	
+
+	public List<OperationExecutionHistory> getOperationExecutionHistory() {
+		return operationExecutionHistories;
+	}
+
+	public void setOperationExecutionHistory(
+			List<OperationExecutionHistory> operationExecutionHistories) {
+		this.operationExecutionHistories = operationExecutionHistories;
+	}
+
+
 }

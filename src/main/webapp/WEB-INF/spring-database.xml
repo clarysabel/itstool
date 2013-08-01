@@ -28,9 +28,12 @@
 			<ref local="dataSource" />
 		</property>
 		<property name="annotatedClasses">
+		
             <list><!-- TODO: COMPLETE WITH ALL MAPPED CLASSES
                 <value>com.openenglish.itstool.bean.User</value>
-             --></list>
+             -->
+             <value>com.openenglish.itstool.bean.User</value>
+             </list>
         </property>
 		
 		<property name="hibernateProperties">

@@ -1,6 +1,8 @@
 package com.openenglish.itstool.bean;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,14 +11,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.openenglish.itstool.common.bean.Bean;
-
 @Entity
 @Table(name = "operations_execution_history", catalog = "orion")
-public class OperationExecutionHistory implements Bean {
+public class OperationExecutionHistory implements Serializable {
 
 	private static final long serialVersionUID = 8182742045594675976L;
 
@@ -35,18 +36,22 @@ public class OperationExecutionHistory implements Bean {
 	
 	@Column(name="execution_time")
 	private Timestamp executionTime;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "operationExecutionHistory")
+	private List<OperationExecutionValue> operationExecutionValues;
 
 	public OperationExecutionHistory(Integer operationExecutionHistoryId,
-			User user, Operation operation, Timestamp executionTime) {
+			User user, Operation operation, Timestamp executionTime,
+			List<OperationExecutionValue> operationExecutionValues) {
 		super();
 		this.operationExecutionHistoryId = operationExecutionHistoryId;
 		this.user = user;
 		this.operation = operation;
 		this.executionTime = executionTime;
+		this.operationExecutionValues = operationExecutionValues;
 	}
 
 	public OperationExecutionHistory() {
-		super();
 	}
 
 	public Integer getOperationExecutionHistoryId() {
@@ -80,5 +85,15 @@ public class OperationExecutionHistory implements Bean {
 	public void setExecutionTime(Timestamp executionTime) {
 		this.executionTime = executionTime;
 	}
+
+	public List<OperationExecutionValue> getOperationExecutionValues() {
+		return operationExecutionValues;
+	}
+
+	public void setOperationExecutionValues(
+			List<OperationExecutionValue> operationExecutionValues) {
+		this.operationExecutionValues = operationExecutionValues;
+	}
+	
 	
 }

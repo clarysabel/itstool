@@ -1,5 +1,7 @@
 package com.openenglish.itstool.bean;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,16 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
-
-import com.openenglish.itstool.common.bean.Bean;
-
 @Entity
 @Table(name = "roles", catalog = "orion")
-@SQLDelete(sql="UPDATE roles SET deleted = 'Y' WHERE id = ?")
-@Where(clause="deleted <> 'Y'")
-public class Role implements Bean {
+public class Role implements Serializable {
 
 	private static final long serialVersionUID = -704479125752534429L;
 	
@@ -25,9 +20,9 @@ public class Role implements Bean {
 	@Column(name="role_id")
 	private Integer roleId;
 	private String name;
-	private Character deleted;
+	private Boolean deleted;
 	
-	public Role(Integer roleId, String name, Character deleted) {
+	public Role(Integer roleId, String name, Boolean deleted) {
 		super();
 		this.roleId = roleId;
 		this.name = name;
@@ -35,7 +30,6 @@ public class Role implements Bean {
 	}
 
 	public Role() {
-		super();
 	}
 
 	public Integer getRoleId() {
@@ -54,12 +48,13 @@ public class Role implements Bean {
 		this.name = name;
 	}
 
-	public Character getDeleted() {
+	public Boolean getDeleted() {
 		return deleted;
 	}
 
-	public void setDeleted(Character deleted) {
+	public void setDeleted(Boolean deleted) {
 		this.deleted = deleted;
 	}
-	
+
+
 }

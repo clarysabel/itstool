@@ -1,5 +1,7 @@
 package com.openenglish.itstool.bean;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,11 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.openenglish.itstool.common.bean.Bean;
-
 @Entity
 @Table(name = "operations_execution_values", catalog = "orion")
-public class OperationExecutionValue implements Bean {
+public class OperationExecutionValue implements Serializable {
 
 	private static final long serialVersionUID = -7918704955235758909L;
 
@@ -31,6 +31,7 @@ public class OperationExecutionValue implements Bean {
 	@JoinColumn(name = "operation_execution_history_id")
 	private OperationExecutionHistory operationExecutionHistory;
 	
+	@Column(name="value")
 	private String value;
 
 	public OperationExecutionValue(Integer operationExecutionValueId,
@@ -44,7 +45,6 @@ public class OperationExecutionValue implements Bean {
 	}
 
 	public OperationExecutionValue() {
-		super();
 	}
 
 	public Integer getOperationExecutionValueId() {

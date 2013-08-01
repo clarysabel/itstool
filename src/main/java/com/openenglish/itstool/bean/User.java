@@ -1,5 +1,6 @@
 package com.openenglish.itstool.bean;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -18,16 +19,10 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
-
-import com.openenglish.itstool.common.bean.Bean;
 
 @Entity
 @Table(name = "users", catalog = "orion")
-@SQLDelete(sql="UPDATE users SET deleted = 'Y' WHERE id = ?")
-@Where(clause="deleted <> 'Y'")
-public class User implements Bean {
+public class User implements Serializable {
 
 	private static final long serialVersionUID = -6057185166011652037L;
 
@@ -35,32 +30,44 @@ public class User implements Bean {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
 	private Integer userId;
+	
+	@Column(name="email")
 	private String email;
+	
+	@Column(name="password")
 	private String password;
+	
+	@Column(name="status")
 	private Character status;
 	
 	@Generated(GenerationTime.ALWAYS)
-	@Temporal(TemporalType.DATE)
+//	@Temporal(TemporalType.DATE)
 	@Column(name = "creation_date")
 	private Timestamp creationDate;
 
 	@Generated(GenerationTime.ALWAYS)
-	@Temporal(TemporalType.DATE)
+//	@Temporal(TemporalType.DATE)
 	@Column(name = "last_modified")
 	private Timestamp lastModified;
-	private Character deleted;
+	
+	@Column(name="deleted")
+	private Boolean deleted;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "users_roles", schema="orion", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
 	private List<Role> roles;
-
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "users_categories", schema="orion", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "category_id") })
+	private List<Category> categories;
+	
 	public User() {
 		super();
 	}
 
 	public User(Integer userId, String email, String password,
 			Character status, Timestamp creationDate, Timestamp lastModified,
-			Character deleted, List<Role> roles) {
+			Boolean deleted, List<Role> roles, List<Category> categories) {
 		super();
 		this.userId = userId;
 		this.email = email;
@@ -70,6 +77,7 @@ public class User implements Bean {
 		this.lastModified = lastModified;
 		this.deleted = deleted;
 		this.roles = roles;
+		this.categories = categories;
 	}
 
 	public Integer getUserId() {
@@ -120,20 +128,28 @@ public class User implements Bean {
 		this.lastModified = lastModified;
 	}
 
-	public Character getDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(Character deleted) {
-		this.deleted = deleted;
-	}
-
 	public List<Role> getRoles() {
 		return roles;
 	}
 
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
+	}
+
+	public Boolean getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(Boolean deleted) {
+		this.deleted = deleted;
+	}
+
+	public List<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
 	}
 
 }
