@@ -2,8 +2,8 @@ package com.openenglish.itstool.bo;
 
 import java.util.List;
 
-import com.openenglish.itstool.bean.Output;
 import com.openenglish.itstool.common.bo.Bo;
+import com.openenglish.itstool.entity.Output;
 import com.openenglish.itstool.exception.DataAccessException;
 
 public interface OutputBo extends Bo {

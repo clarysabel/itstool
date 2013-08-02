@@ -2,8 +2,8 @@ package com.openenglish.itstool.bo;
 
 import java.util.List;
 
-import com.openenglish.itstool.bean.Operation;
 import com.openenglish.itstool.common.bo.Bo;
+import com.openenglish.itstool.entity.Operation;
 import com.openenglish.itstool.exception.DataAccessException;
 
 public interface OperationBo extends Bo {

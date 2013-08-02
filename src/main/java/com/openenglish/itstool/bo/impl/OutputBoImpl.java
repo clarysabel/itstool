@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.openenglish.itstool.bean.Output;
 import com.openenglish.itstool.bo.OutputBo;
 import com.openenglish.itstool.dao.OutputDao;
+import com.openenglish.itstool.entity.Output;
 import com.openenglish.itstool.exception.DataAccessException;
 
 @Repository("outputBo")

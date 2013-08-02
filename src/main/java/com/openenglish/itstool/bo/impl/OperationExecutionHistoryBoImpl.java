@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.openenglish.itstool.bean.OperationExecutionHistory;
 import com.openenglish.itstool.bo.OperationExecutionHistoryBo;
 import com.openenglish.itstool.dao.OperationExecutionHistoryDao;
+import com.openenglish.itstool.entity.OperationExecutionHistory;
 import com.openenglish.itstool.exception.DataAccessException;
 
 @Repository("operationExecutionHistoryBo")

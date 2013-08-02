@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.openenglish.itstool.bean.OperationExecutionValue;
 import com.openenglish.itstool.bo.OperationExecutionValueBo;
 import com.openenglish.itstool.dao.OperationExecutionValueDao;
+import com.openenglish.itstool.entity.OperationExecutionValue;
 import com.openenglish.itstool.exception.DataAccessException;
 
 @Repository("operationExecutionValueBo")

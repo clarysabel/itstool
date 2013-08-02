@@ -15,8 +15,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.openenglish.itstool.bean.Role;
 import com.openenglish.itstool.bo.UserBo;
+import com.openenglish.itstool.entity.Role;
 import com.openenglish.itstool.util.ITSConstants;
 
 @SuppressWarnings("deprecation")

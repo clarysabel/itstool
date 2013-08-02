@@ -1,4 +1,4 @@
-package com.openenglish.itstool.bean;
+package com.openenglish.itstool.entity;
 
 import java.io.Serializable;
 
@@ -14,16 +14,16 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "outputs", catalog = "orion")
-public class Output implements Serializable {
+@Table(name = "inputs", catalog = "orion")
+public class Input implements Serializable {
 
-	private static final long serialVersionUID = -1634137841697960077L;
-	
+	private static final long serialVersionUID = -2559719551056552128L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="output_id")
-	private Integer outputId;
-	
+	@Column(name = "input_id")
+	private Integer inputId;
+
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "operation_id")
 	private Operation operation;
@@ -34,36 +34,32 @@ public class Output implements Serializable {
 	@Column(name="type")
 	private String type;
 	
-	@Column(name="display_order")
-	private Short displayOrder;
-
 	@Column(name="display_name")
 	private String displayName;
 	
 	@Column(name="deleted")
 	private Boolean deleted;
-
-	public Output(Integer outputId, Operation operation, String name,
-			String type, Short displayOrder, String displayName, Boolean deleted) {
+	
+	public Input() {
+	}
+	
+	public Input(Integer inputId, Operation operation, String name,
+			String type, String displayName, Boolean deleted) {
 		super();
-		this.outputId = outputId;
+		this.inputId = inputId;
 		this.operation = operation;
 		this.name = name;
 		this.type = type;
-		this.displayOrder = displayOrder;
 		this.displayName = displayName;
 		this.deleted = deleted;
 	}
 
-	public Output() {
+	public Integer getInputId() {
+		return inputId;
 	}
 
-	public Integer getOutputId() {
-		return outputId;
-	}
-
-	public void setOutputId(Integer outputId) {
-		this.outputId = outputId;
+	public void setInputId(Integer inputId) {
+		this.inputId = inputId;
 	}
 
 	public Operation getOperation() {
@@ -90,14 +86,6 @@ public class Output implements Serializable {
 		this.type = type;
 	}
 
-	public Short getDisplayOrder() {
-		return displayOrder;
-	}
-
-	public void setDisplayOrder(Short displayOrder) {
-		this.displayOrder = displayOrder;
-	}
-
 	public String getDisplayName() {
 		return displayName;
 	}
@@ -113,7 +101,5 @@ public class Output implements Serializable {
 	public void setDeleted(Boolean deleted) {
 		this.deleted = deleted;
 	}
-
-
 	
 }

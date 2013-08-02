@@ -2,8 +2,8 @@ package com.openenglish.itstool.bo;
 
 import java.util.List;
 
-import com.openenglish.itstool.bean.OperationExecutionValue;
 import com.openenglish.itstool.common.bo.Bo;
+import com.openenglish.itstool.entity.OperationExecutionValue;
 import com.openenglish.itstool.exception.DataAccessException;
 
 public interface OperationExecutionValueBo extends Bo {

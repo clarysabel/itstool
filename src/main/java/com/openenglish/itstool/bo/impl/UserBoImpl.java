@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.openenglish.itstool.bean.User;
 import com.openenglish.itstool.bo.UserBo;
 import com.openenglish.itstool.dao.UserDao;
+import com.openenglish.itstool.entity.User;
 import com.openenglish.itstool.exception.DataAccessException;
 
 @Repository("userBo")

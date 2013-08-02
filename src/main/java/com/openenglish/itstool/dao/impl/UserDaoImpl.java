@@ -6,9 +6,9 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
-import com.openenglish.itstool.bean.User;
 import com.openenglish.itstool.dao.UserDao;
 import com.openenglish.itstool.database.AbstractDao;
+import com.openenglish.itstool.entity.User;
 import com.openenglish.itstool.exception.DataAccessException;
 
 @Repository("userDao")

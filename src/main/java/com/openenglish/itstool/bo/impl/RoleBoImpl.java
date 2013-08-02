@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.openenglish.itstool.bean.Role;
 import com.openenglish.itstool.bo.RoleBo;
 import com.openenglish.itstool.dao.RoleDao;
+import com.openenglish.itstool.entity.Role;
 import com.openenglish.itstool.exception.DataAccessException;
 
 @Repository("roleBo")

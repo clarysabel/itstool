@@ -15,7 +15,7 @@
 		
 		<!-- Adding the openid-login tag activates Spring Security's support for OpenID  -->
 		<security:openid-login
-				login-page="/krams/auth/login" 
+				login-page="/login" 
 				authentication-failure-handler-ref="openIDAuthenticationFailureHandler"
 				default-target-url="/krams/main/common">
 			<security:attribute-exchange>

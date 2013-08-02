@@ -1,4 +1,4 @@
-package com.openenglish.itstool.bean;
+package com.openenglish.itstool.entity;
 
 import java.io.Serializable;
 
