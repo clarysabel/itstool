@@ -7,18 +7,18 @@ import org.springframework.security.openid.OpenIDAuthenticationToken;
 
 import antlr.StringUtils;
 
-public class NormalizedOpenIdAttributesBuilder {
+public class OpenIDUserBuilder {
     private Set<String> emailAddressAttributeNames = new HashSet<String>();
     private Set<String> firstNameAttributeNames = new HashSet<String>();
     private Set<String> lastNameAttributeNames = new HashSet<String>();
     private Set<String> fullNameAttributeNames = new HashSet<String>();
  
-    public NormalizedOpenIdAttributes build(OpenIDAuthenticationToken openIdAuthenticationToken) {
+    public OpenIDUser build(OpenIDAuthenticationToken openIdAuthenticationToken) {
         String userLocalIdentifier = openIdAuthenticationToken.getIdentityUrl();
         String emailAddress = setUpEmailAddress(openIdAuthenticationToken);
         String fullName = setUpFullName(openIdAuthenticationToken);
         String loginReplacement = setUpLoginReplacement(openIdAuthenticationToken);
-        return new NormalizedOpenIdAttributes(userLocalIdentifier, emailAddress, fullName, loginReplacement);
+        return new OpenIDUser(userLocalIdentifier, emailAddress, fullName, loginReplacement);
     }
  
     private String setUpLoginReplacement(OpenIDAuthenticationToken openIdAuthenticationToken) {

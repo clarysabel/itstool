@@ -2,13 +2,16 @@ package com.openenglish.itstool.security;
 
 import java.io.Serializable;
 
-public class NormalizedOpenIdAttributes implements Serializable {
-    private String userLocalIdentifier;
+public class OpenIDUser implements Serializable {
+
+	private static final long serialVersionUID = -7161551544642102842L;
+	
+	private String userLocalIdentifier;
     private String emailAddress;
     private String fullName;
     private String loginReplacement;
  
-    public NormalizedOpenIdAttributes(String userLocalIdentifier, String emailAddress, String fullName, String loginReplacement) {
+    public OpenIDUser(String userLocalIdentifier, String emailAddress, String fullName, String loginReplacement) {
         this.userLocalIdentifier = userLocalIdentifier;
         this.emailAddress = emailAddress;
         this.fullName = fullName;

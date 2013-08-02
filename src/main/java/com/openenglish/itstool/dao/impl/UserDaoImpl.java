@@ -13,13 +13,13 @@ import com.openenglish.itstool.exception.DataAccessException;
 
 @Repository("userDao")
 public class UserDaoImpl extends AbstractDao implements UserDao {
-
+	
+	private static final String EMAIL_FIELD = "email";
+	private static Logger logger = Logger.getLogger(UserDaoImpl.class);
+	
 	public UserDaoImpl() {
 		super(User.class);
 	}
-
-	private static final String EMAIL_FIELD = "email";
-	private static Logger logger = Logger.getLogger(UserDaoImpl.class);
 
 	@SuppressWarnings("unchecked")
 	public User findByEmail(String email) throws DataAccessException {

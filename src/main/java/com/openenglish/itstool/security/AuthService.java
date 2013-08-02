@@ -1,13 +1,7 @@
 package com.openenglish.itstool.security;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,27 +9,35 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.openenglish.itstool.bo.UserBo;
-import com.openenglish.itstool.entity.Role;
-import com.openenglish.itstool.util.ITSConstants;
+import com.openenglish.itstool.dao.UserDao;
 
 @SuppressWarnings("deprecation")
 @Service("userDetailsService")
 public class AuthService implements UserDetailsService {
-    private UserRepository userRepository;
+	
+	@Autowired
+    private UserDao userDao;
  
     // required by CGLIB
-    protected AuthService() {
+    public AuthService() {
     }
  
-    public AuthService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
- 
-    @Override
+
+    public UserDao getUserDao() {
+		return userDao;
+	}
+
+
+	public void setUserDao(UserDao userDao) {
+		this.userDao = userDao;
+	}
+
+
+	@Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
     	System.out.println(username);
+    	System.out.println(userDao == null);
         //User user = userRepository.findByLoginOpenId(username);
        throwExceptionIfNotFound(null, username);
         //Build UserDetails Spring 

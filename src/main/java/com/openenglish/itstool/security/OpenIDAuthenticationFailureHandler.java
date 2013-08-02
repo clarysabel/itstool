@@ -16,9 +16,9 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 
 public class OpenIDAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
     private String openIdRegistrationUrl;
-    private NormalizedOpenIdAttributesBuilder normalizedOpenIdAttributesBuilder;
+    private OpenIDUserBuilder normalizedOpenIdAttributesBuilder;
  
-    public OpenIDAuthenticationFailureHandler(String openIdRegistrationUrl, NormalizedOpenIdAttributesBuilder normalizedOpenIdAttributesBuilder) {
+    public OpenIDAuthenticationFailureHandler(String openIdRegistrationUrl, OpenIDUserBuilder normalizedOpenIdAttributesBuilder) {
         this.openIdRegistrationUrl = openIdRegistrationUrl;
         this.normalizedOpenIdAttributesBuilder = normalizedOpenIdAttributesBuilder;
     }
@@ -41,7 +41,7 @@ public class OpenIDAuthenticationFailureHandler extends SimpleUrlAuthenticationF
     private void addOpenIdAttributesToSession(HttpServletRequest request, OpenIDAuthenticationToken openIdAuthenticationToken) throws ServletException {
         HttpSession session = request.getSession(false);
         sessionShouldBePresent(session);
-        NormalizedOpenIdAttributes normalizedOpenIdAttributes = normalizedOpenIdAttributesBuilder.build(openIdAuthenticationToken);
+        OpenIDUser normalizedOpenIdAttributes = normalizedOpenIdAttributesBuilder.build(openIdAuthenticationToken);
         System.out.println(normalizedOpenIdAttributes.getEmailAddress());
         session.setAttribute("USER_OPENID_CREDENTIAL", normalizedOpenIdAttributes);
     }
