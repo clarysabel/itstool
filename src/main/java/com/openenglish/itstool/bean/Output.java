@@ -21,6 +21,7 @@ public class Output implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="output_id")
 	private Integer outputId;
 	
 	@OneToOne(cascade = CascadeType.ALL)

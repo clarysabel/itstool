@@ -27,14 +27,14 @@
 		<property name="dataSource">
 			<ref local="dataSource" />
 		</property>
-		<property name="annotatedClasses">
+		<property name="packagesToScan" value="com.openenglish.itstool.bean" />
 		
-            <list><!-- TODO: COMPLETE WITH ALL MAPPED CLASSES
-                <value>com.openenglish.itstool.bean.User</value>
-             -->
+		<!-- <property name="annotatedClasses">
+		
+            <list>
              <value>com.openenglish.itstool.bean.User</value>
              </list>
-        </property>
+        </property> -->
 		
 		<property name="hibernateProperties">
 			<props>

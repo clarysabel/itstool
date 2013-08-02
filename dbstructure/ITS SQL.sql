@@ -1,3 +1,5 @@
+﻿create schema orion;
+
 CREATE TABLE orion.roles (
   role_id SERIAL  NOT NULL ,
   name VARCHAR(20)   NOT NULL ,
@@ -9,12 +11,13 @@ PRIMARY KEY(role_id));
 CREATE TABLE orion.users (
   user_id SERIAL  NOT NULL ,
   username VARCHAR(500)    ,
+  password VARCHAR(100) ,
   first_name VARCHAR(100)   NOT NULL ,
   last_name VARCHAR(100)   NOT NULL ,
   email VARCHAR(100)   NOT NULL ,
   creation_date TIMESTAMP   NOT NULL ,
   last_modified TIMESTAMP   NOT NULL ,
-  status  CHAR   NOT NULL ,
+  status  CHARACTER(1)   NOT NULL ,
   deleted BOOL  DEFAULT FALSE NOT NULL   ,
 PRIMARY KEY(user_id));
 
@@ -23,7 +26,7 @@ PRIMARY KEY(user_id));
 CREATE TABLE orion.operations (
   operation_id SERIAL  NOT NULL ,
   name VARCHAR(50)   NOT NULL ,
-  type  CHAR   NOT NULL ,
+  type  VARCHAR(20)   NOT NULL ,
   sql_code TEXT   NOT NULL ,
   detail VARCHAR(300)    ,
   deleted BOOL  DEFAULT FALSE    ,
@@ -44,7 +47,7 @@ CREATE TABLE orion.outputs (
   output_id SERIAL  NOT NULL ,
   operation_id INTEGER   NOT NULL ,
   name VARCHAR(20)    ,
-  type  VARCHAR(20)    ,
+  type  VARCHAR(50)    ,
   display_order  SMALLINT    ,
   display_name VARCHAR(40)    ,
   deleted BOOL  DEFAULT FALSE    ,
