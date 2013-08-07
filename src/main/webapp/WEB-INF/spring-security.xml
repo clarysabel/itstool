@@ -7,17 +7,16 @@
 			http://www.springframework.org/schema/security 
 			http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 	
-	<security:http auto-config="true" use-expressions="true" access-denied-page="/krams/auth/denied" >
+	<security:http auto-config="true" use-expressions="true" access-denied-page="/secure/denied" >
 	
-		<security:intercept-url pattern="/login" access="permitAll"/>
-		<security:intercept-url pattern="/krams/main/admin" access="hasRole('ROLE_ADMIN')"/>
-		<security:intercept-url pattern="/krams/main/common" access="hasRole('ROLE_USER')"/>
+		<security:intercept-url pattern="/secure/login" access="permitAll"/>
+		<security:intercept-url pattern="/app/**" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
 		
 		<!-- Adding the openid-login tag activates Spring Security's support for OpenID  -->
 		<security:openid-login
-				login-page="/login" 
-				authentication-failure-handler-ref="openIDAuthenticationFailureHandler"
-				default-target-url="/krams/main/common">
+				login-page="/secure/login" 
+				authentication-failure-url="/secure/error"
+				default-target-url="/app">
 			<security:attribute-exchange>
 				<security:openid-attribute name="axContactEmail" type="http://axschema.org/contact/email" required="true"/>
 	            <security:openid-attribute name="oiContactEmail" type="http://schema.openid.net/contact/email" required="true"/>
@@ -26,31 +25,20 @@
 			
 		<security:logout 
 				invalidate-session="true" 
-				logout-success-url="/krams/auth/login" 
-				logout-url="/krams/auth/logout"/>
+				logout-success-url="/app" 
+				logout-url="/secure/logout"/>
 	
 	</security:http>
 	
 	<!-- Declare an authentication-manager to use a custom userDetailsService -->
 	<security:authentication-manager>
-	        <security:authentication-provider user-service-ref="userDetailsService">
-	        		<security:password-encoder ref="passwordEncoder"/>
-	        </security:authentication-provider>
+        <security:authentication-provider user-service-ref="userDetailsService">
+        </security:authentication-provider>
 	</security:authentication-manager>
-	
-	<!-- Use a Md5 encoder since the user's passwords are stored as Md5 in the database -->
-	<bean class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" id="passwordEncoder"/>
-
   
 	<bean id="userDetailsService"  name="userAuthenticationProvider" class="com.openenglish.itstool.security.AuthService"/>
-      
-    
-      <bean id="openIDAuthenticationFailureHandler" class="com.openenglish.itstool.security.OpenIDAuthenticationFailureHandler">
-        <constructor-arg index="0" value="/openIdRegistration"/>
-        <constructor-arg index="1" ref="normalizedOpenIdAttributesBuilder"/>
-    </bean>
-
-    <bean id="normalizedOpenIdAttributesBuilder" class="com.openenglish.itstool.security.NormalizedOpenIdAttributesBuilder">
+     
+    <bean id="openIDUserBuilder" class="com.openenglish.itstool.security.OpenIDUserBuilder">
         <property name="emailAddressAttributeNames">
             <set value-type="java.lang.String">
                 <value type="java.lang.String">axContactEmail</value>
@@ -58,8 +46,6 @@
             </set>
         </property>
     </bean>
-	
-	
 	
 </beans>
 

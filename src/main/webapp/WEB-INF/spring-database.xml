@@ -27,15 +27,7 @@
 		<property name="dataSource">
 			<ref local="dataSource" />
 		</property>
-		<property name="packagesToScan" value="com.openenglish.itstool.bean" />
-		
-		<!-- <property name="annotatedClasses">
-		
-            <list>
-             <value>com.openenglish.itstool.bean.User</value>
-             </list>
-        </property> -->
-		
+		<property name="packagesToScan" value="com.openenglish.itstool.entity" />
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">${jdbc.dialect}</prop>

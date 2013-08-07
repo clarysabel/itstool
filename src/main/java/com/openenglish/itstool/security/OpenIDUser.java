@@ -8,29 +8,26 @@ public class OpenIDUser implements Serializable {
 	
 	private String userLocalIdentifier;
     private String emailAddress;
-    private String fullName;
-    private String loginReplacement;
  
-    public OpenIDUser(String userLocalIdentifier, String emailAddress, String fullName, String loginReplacement) {
+    public OpenIDUser(String userLocalIdentifier, String emailAddress) {
         this.userLocalIdentifier = userLocalIdentifier;
         this.emailAddress = emailAddress;
-        this.fullName = fullName;
-        this.loginReplacement = loginReplacement;
     }
+
+	public String getUserLocalIdentifier() {
+		return userLocalIdentifier;
+	}
+
+	public void setUserLocalIdentifier(String userLocalIdentifier) {
+		this.userLocalIdentifier = userLocalIdentifier;
+	}
+
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
  
-    public String getUserLocalIdentifier() {
-        return userLocalIdentifier;
-    }
- 
-    public String getEmailAddress() {
-        return emailAddress;
-    }
- 
-    public String getFullName() {
-        return fullName;
-    }
- 
-    public String getLoginReplacement() {
-        return loginReplacement;
-    }
 }

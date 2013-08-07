@@ -14,14 +14,20 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "users", catalog = "orion")
+@SQLDelete(sql="UPDATE customer SET deleted = 'true' WHERE id = ?")
+@Where(clause="deleted = 'false'")
 public class User implements Serializable {
 
 	private static final long serialVersionUID = -6057185166011652037L;
@@ -30,6 +36,11 @@ public class User implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
 	private Integer userId;
+	
+	
+	@Column(name="username")
+	private String username;
+	
 	
 	@Column(name="email")
 	private String email;
@@ -41,12 +52,10 @@ public class User implements Serializable {
 	private Character status;
 	
 	@Generated(GenerationTime.ALWAYS)
-//	@Temporal(TemporalType.DATE)
 	@Column(name = "creation_date")
 	private Timestamp creationDate;
 
 	@Generated(GenerationTime.ALWAYS)
-//	@Temporal(TemporalType.DATE)
 	@Column(name = "last_modified")
 	private Timestamp lastModified;
 	
@@ -54,10 +63,12 @@ public class User implements Serializable {
 	private Boolean deleted;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable(name = "users_roles", schema="orion", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
 	private List<Role> roles;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable(name = "users_categories", schema="orion", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "category_id") })
 	private List<Category> categories;
 	
@@ -128,6 +139,7 @@ public class User implements Serializable {
 		this.lastModified = lastModified;
 	}
 
+	@Fetch(value = FetchMode.SUBSELECT)
 	public List<Role> getRoles() {
 		return roles;
 	}
@@ -144,6 +156,7 @@ public class User implements Serializable {
 		this.deleted = deleted;
 	}
 
+	@Fetch(value = FetchMode.SUBSELECT)
 	public List<Category> getCategories() {
 		return categories;
 	}
@@ -151,5 +164,15 @@ public class User implements Serializable {
 	public void setCategories(List<Category> categories) {
 		this.categories = categories;
 	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
+	
 
 }

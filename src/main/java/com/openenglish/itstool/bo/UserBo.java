@@ -17,5 +17,7 @@ public interface UserBo extends Bo {
 	public void delete(Integer id) throws DataAccessException;
 	
 	public User findByEmail(String email) throws DataAccessException;
+	
+	public User findByUsername(String username) throws DataAccessException ;
 
 }
