@@ -12,9 +12,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 
 @Entity
 @Table(name = "inputs", catalog = "orion")
+@SQLDelete(sql="UPDATE customer SET deleted = 'true' WHERE id = ?")
+@Where(clause="deleted = 'false'")
 public class Input implements Serializable {
 
 	private static final long serialVersionUID = -2559719551056552128L;
