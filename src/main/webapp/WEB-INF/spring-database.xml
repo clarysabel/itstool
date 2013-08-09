@@ -13,24 +13,49 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd">
 
-	<bean id="propertyConfigurer"
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
-		p:location="/WEB-INF/database.properties" />
 
-	<bean id="dataSource"
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	    <property name="ignoreUnresolvablePlaceholders" value="true"/>
+	</bean>   
+	
+	<bean class="org.springframework.web.context.support.ServletContextPropertyPlaceholderConfigurer">
+    	<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
+    	<property name="searchContextAttributes" value="true"/>
+    	<property name="contextOverride" value="true"/>
+    	<property name="ignoreResourceNotFound" value="true"/>
+    	<property name="locations">
+        	<list>
+				<value>file:/${ITS_TOOL_ENV_CONFIG}database-itstool.properties</value>
+        		<value>file:/${ITS_TOOL_ENV_CONFIG}database-leviticus.properties</value>
+        	</list>
+    	</property>
+	</bean>
+
+	<bean id="dataSourceITSTool"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-		p:driverClassName="${jdbc.driverClassName}" p:url="${jdbc.databaseurl}"
-		p:username="${jdbc.username}" p:password="${jdbc.password}" />
+		p:driverClassName="${itstool.jdbc.driverClassName}" p:url="${itstool.jdbc.databaseurl}"
+		p:username="${itstool.jdbc.username}" p:password="${itstool.jdbc.password}" />
 
+	<bean id="dataSourceLeviticus" class="org.apache.commons.dbcp.BasicDataSource"
+        destroy-method="close">
+        <property name="url" value="${leviticus.jdbc.databaseurl}" />
+        <property name="driverClassName" value="${leviticus.jdbc.driverClassName}" />
+        <property name="username" value="${leviticus.jdbc.username}" />
+        <property name="password" value="${leviticus.jdbc.password}" />
+        <property name="removeAbandoned" value="true" />
+        <property name="initialSize" value="20" />
+        <property name="maxActive" value="30" />
+    </bean>
+		
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 		<property name="dataSource">
-			<ref local="dataSource" />
+			<ref local="dataSourceITSTool" />
 		</property>
 		<property name="packagesToScan" value="com.openenglish.itstool.entity" />
 		<property name="hibernateProperties">
 			<props>
-				<prop key="hibernate.dialect">${jdbc.dialect}</prop>
+				<prop key="hibernate.dialect">${itstool.jdbc.dialect}</prop>
 				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.connection.autocommit">true</prop>
 				<prop key="hibernate.cache.use_query_cache">true</prop>
